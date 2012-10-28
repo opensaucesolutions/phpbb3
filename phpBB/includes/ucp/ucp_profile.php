@@ -133,6 +133,9 @@ class ucp_profile
 
 						$message = 'PROFILE_UPDATED';
 
+						require_once($phpbb_root_path . 'wp-united/wpu-actions.' . $phpEx);
+						$GLOBALS['wpu_actions']->profile_update('reg_details', $user->data['user_id'], $user->data['user_wpuint_id'], $sql_ary);
+
 						if ($auth->acl_get('u_chgemail') && $config['email_enable'] && $data['email'] != $user->data['user_email'] && $user->data['user_type'] != USER_FOUNDER && ($config['require_activation'] == USER_ACTIVATION_SELF || $config['require_activation'] == USER_ACTIVATION_ADMIN))
 						{
 							$message = ($config['require_activation'] == USER_ACTIVATION_SELF) ? 'ACCOUNT_EMAIL_CHANGED' : 'ACCOUNT_EMAIL_CHANGED_ADMIN';
@@ -372,6 +375,9 @@ class ucp_profile
 							SET ' . $db->sql_build_array('UPDATE', $sql_ary) . '
 							WHERE user_id = ' . $user->data['user_id'];
 						$db->sql_query($sql);
+
+						require_once($phpbb_root_path . 'wp-united/wpu-actions.' . $phpEx);
+						$GLOBALS['wpu_actions']->profile_update('profile_info', $user->data['user_id'], $user->data['user_wpuint_id'], $sql_ary);
 
 						// Update Custom Fields
 						$cp->update_profile_field_data($user->data['user_id'], $cp_data);

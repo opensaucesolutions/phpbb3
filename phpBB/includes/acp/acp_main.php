@@ -339,6 +339,10 @@ class acp_main
 						global $cache;
 						$cache->purge();
 
+						require_once($phpbb_root_path . 'wp-united/cache.' . $phpEx);
+						$wpuCache = WPU_Cache::getInstance();
+						$wpuCache->purge();
+
 						// Clear permissions
 						$auth->acl_clear_prefetch();
 						cache_moderators();

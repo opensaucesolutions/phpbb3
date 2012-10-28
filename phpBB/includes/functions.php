@@ -11,6 +11,7 @@
 /**
 * @ignore
 */
+
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -141,6 +142,7 @@ function request_var($var_name, $default, $multibyte = false, $cookie = false)
 */
 function set_config($config_name, $config_value, $is_dynamic = false)
 {
+error_reporting(E_ALL);
 	global $db, $cache, $config;
 
 	$sql = 'UPDATE ' . CONFIG_TABLE . "
@@ -430,6 +432,7 @@ function still_on_time($extra_time = 15)
 *
 * Hash the password
 */
+
 function phpbb_hash($password)
 {
 	$itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -4400,6 +4403,9 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 {
 	global $db, $config, $template, $SID, $_SID, $_EXTRA_URL, $user, $auth, $phpEx, $phpbb_root_path;
 
+/*	// wordpress
+        // require_once('../../wp-includes/nav-menu-template.php');
+*/
 	if (defined('HEADER_INC'))
 	{
 		return;
@@ -4678,6 +4684,7 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 		'T_ICONS'				=> $config['icons_path'],
 		'T_RANKS'				=> $config['ranks_path'],
 		'T_UPLOAD'				=> $config['upload_path'],
+
 
 		'SITE_LOGO_IMG'			=> $user->img('site_logo'),
 

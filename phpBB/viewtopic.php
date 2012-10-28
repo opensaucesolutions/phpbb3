@@ -1215,6 +1215,10 @@ while ($row = $db->sql_fetchrow($result))
 		}
 	}
 }
+
+require_once($phpbb_root_path . 'wp-united/wpu-actions.' . $phpEx);
+$GLOBALS['wpu_actions']->generate_viewtopic_link($row['user_wpublog_id'], $user_cache[$poster_id]);
+
 $db->sql_freeresult($result);
 
 // Load custom profile fields
@@ -1595,6 +1599,8 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 	{
 		$postrow = array_merge($postrow, $cp_row['row']);
 	}
+
+	$GLOBALS['wpu_actions']->show_viewtopic_link($user_cache[$poster_id], $postrow);
 
 	// Dump vars into template
 	$template->assign_block_vars('postrow', $postrow);

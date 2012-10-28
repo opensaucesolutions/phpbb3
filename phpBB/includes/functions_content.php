@@ -638,44 +638,53 @@ function make_clickable_callback($type, $whitespace, $url, $relative_url, $class
 * Cuts down displayed size of link if over 50 chars, turns absolute links
 * into relative versions when the server/script path matches the link
 */
-function make_clickable($text, $server_url = false, $class = 'postlink')
+if (!function_exists('make_clickable')) 
 {
-	if ($server_url === false)
+	function make_clickable($text, $server_url = false, $class = 'postlink')
 	{
-		$server_url = generate_board_url();
+		global $IN_WORDPRESS;
+		if ($IN_WORDPRESS)
+		{
+			return wp_make_clickable($text);
+		} else {
+			if ($server_url === false)
+			{
+				$server_url = generate_board_url();
+			}
+
+			static $magic_url_match;
+			static $magic_url_replace;
+			static $static_class;
+
+			if (!is_array($magic_url_match) || $static_class != $class)
+			{
+				$static_class = $class;
+				$class = ($static_class) ? ' class="' . $static_class . '"' : '';
+				$local_class = ($static_class) ? ' class="' . $static_class . '-local"' : '';
+
+				$magic_url_match = $magic_url_replace = array();
+				// Be sure to not let the matches cross over. ;)
+
+				// relative urls for this board
+				$magic_url_match[] = '#(^|[\n\t (>.])(' . preg_quote($server_url, '#') . ')/(' . get_preg_expression('relative_url_inline') . ')#ie';
+				$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_LOCAL, '\$1', '\$2', '\$3', '$local_class')";
+
+				// matches a xxxx://aaaaa.bbb.cccc. ...
+				$magic_url_match[] = '#(^|[\n\t (>.])(' . get_preg_expression('url_inline') . ')#ie';
+				$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_FULL, '\$1', '\$2', '', '$class')";
+
+				// matches a "www.xxxx.yyyy[/zzzz]" kinda lazy URL thing
+				$magic_url_match[] = '#(^|[\n\t (>])(' . get_preg_expression('www_url_inline') . ')#ie';
+				$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_WWW, '\$1', '\$2', '', '$class')";
+
+				// matches an email@domain type address at the start of a line, or after a space or after what might be a BBCode.
+				$magic_url_match[] = '/(^|[\n\t (>])(' . get_preg_expression('email') . ')/ie';
+				$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_EMAIL, '\$1', '\$2', '', '')";
+			}
+
+			return preg_replace($magic_url_match, $magic_url_replace, $text);
+		}
 	}
-
-	static $magic_url_match;
-	static $magic_url_replace;
-	static $static_class;
-
-	if (!is_array($magic_url_match) || $static_class != $class)
-	{
-		$static_class = $class;
-		$class = ($static_class) ? ' class="' . $static_class . '"' : '';
-		$local_class = ($static_class) ? ' class="' . $static_class . '-local"' : '';
-
-		$magic_url_match = $magic_url_replace = array();
-		// Be sure to not let the matches cross over. ;)
-
-		// relative urls for this board
-		$magic_url_match[] = '#(^|[\n\t (>.])(' . preg_quote($server_url, '#') . ')/(' . get_preg_expression('relative_url_inline') . ')#ie';
-		$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_LOCAL, '\$1', '\$2', '\$3', '$local_class')";
-
-		// matches a xxxx://aaaaa.bbb.cccc. ...
-		$magic_url_match[] = '#(^|[\n\t (>.])(' . get_preg_expression('url_inline') . ')#ie';
-		$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_FULL, '\$1', '\$2', '', '$class')";
-
-		// matches a "www.xxxx.yyyy[/zzzz]" kinda lazy URL thing
-		$magic_url_match[] = '#(^|[\n\t (>])(' . get_preg_expression('www_url_inline') . ')#ie';
-		$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_WWW, '\$1', '\$2', '', '$class')";
-
-		// matches an email@domain type address at the start of a line, or after a space or after what might be a BBCode.
-		$magic_url_match[] = '/(^|[\n\t (>])(' . get_preg_expression('email') . ')/ie';
-		$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_EMAIL, '\$1', '\$2', '', '')";
-	}
-
-	return preg_replace($magic_url_match, $magic_url_replace, $text);
 }
 
 /**

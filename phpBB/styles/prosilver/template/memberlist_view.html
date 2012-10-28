@@ -33,6 +33,9 @@
 		<!-- IF INTERESTS --><dt>{L_INTERESTS}:</dt> <dd>{INTERESTS}</dd><!-- ENDIF -->
 		<!-- IF S_GROUP_OPTIONS --><dt>{L_USERGROUPS}:</dt> <dd><select name="g">{S_GROUP_OPTIONS}</select> <input type="submit" name="submit" value="{L_GO}" class="button2" /></dd><!-- ENDIF -->
 		<!-- BEGIN custom_fields --><dt>{custom_fields.PROFILE_FIELD_NAME}:</dt> <dd>{custom_fields.PROFILE_FIELD_VALUE}</dd><!-- END custom_fields -->
+        <!-- IF U_BLOG_LINK -->
+            <dt>{L_BLOG}:</dt> <dd><a href="{U_BLOG_LINK}" title="{L_VISIT_BLOG}" >{L_VISIT_BLOG}</a></dd>
+        <!-- ENDIF -->
 		<!-- IF S_USER_LOGGED_IN and S_ZEBRA -->
 			<!-- IF U_REMOVE_FRIEND -->
 				<dt>&nbsp;</dt> <dd><a href="{U_REMOVE_FRIEND}"><strong>{L_REMOVE_FRIEND}</strong></a></dd>

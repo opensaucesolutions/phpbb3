@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- IF WP_DTD -->{WP_DTD}<!-- ELSE --><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><!-- ENDIF -->
 <html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}" xml:lang="{S_USER_LANG}">
 <head>
 
@@ -12,6 +12,7 @@
 <meta name="description" content="" />
 {META}
 <title>{SITENAME} &bull; <!-- IF S_IN_MCP -->{L_MCP} &bull; <!-- ELSEIF S_IN_UCP -->{L_UCP} &bull; <!-- ENDIF -->{PAGE_TITLE}</title>
+<!-- IF PHPBB_BASE --><base href="{PHPBB_BASE}" /><!-- ENDIF -->
 
 <!-- IF S_ENABLE_FEEDS -->
 	<!-- IF S_ENABLE_FEEDS_OVERALL --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {SITENAME}" href="{U_FEED}" /><!-- ENDIF -->
@@ -30,6 +31,7 @@
 	Modified by:
 -->
 
+<!-- IF WP_HEADERINFO_EARLY -->{WP_HEADERINFO_EARLY}<!-- ENDIF -->
 <script type="text/javascript">
 // <![CDATA[
 	var jump_page = '{LA_JUMP_PAGE}:';
@@ -90,6 +92,7 @@
 	<link href="{T_THEME_PATH}/bidi.css" rel="stylesheet" type="text/css" media="screen, projection" />
 <!-- ENDIF -->
 
+<!-- IF WP_HEADERINFO_LATE -->{WP_HEADERINFO_LATE}<!-- ENDIF -->
 </head>
 
 <body id="phpbb" class="section-{SCRIPT_NAME} {S_CONTENT_DIRECTION}">
@@ -153,6 +156,7 @@
 
 			<ul class="linklist rightside">
 				<li class="icon-faq"><a href="{U_FAQ}" title="{L_FAQ_EXPLAIN}">{L_FAQ}</a></li>
+                <!-- IF S_BLOG --><li class="icon-members"><a href="{U_BLOG}" title="{L_BLOG}">{L_BLOG}</a></li><!-- ENDIF -->
 				<!-- IF not S_IS_BOT -->
 					<!-- IF S_DISPLAY_MEMBERLIST --><li class="icon-members"><a href="{U_MEMBERLIST}" title="{L_MEMBERLIST_EXPLAIN}">{L_MEMBERLIST}</a></li><!-- ENDIF -->
 					<!-- IF not S_USER_LOGGED_IN and S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) --><li class="icon-register"><a href="{U_REGISTER}">{L_REGISTER}</a></li><!-- ENDIF -->

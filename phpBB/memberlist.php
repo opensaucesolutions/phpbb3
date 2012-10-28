@@ -638,6 +638,9 @@ switch ($mode)
 			'U_REMOVE_FOE'		=> ($foe && $foes_enabled) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=zebra&amp;remove=1&amp;mode=foes&amp;usernames[]=' . $user_id) : '',
 		));
 
+		require_once($phpbb_root_path . 'wp-united/wpu-actions.' . $phpEx);
+		$GLOBALS['wpu_actions']->generate_profile_link($member['user_wpublog_id'], $template);
+
 		if (!empty($profile_fields['row']))
 		{
 			$template->assign_vars($profile_fields['row']);

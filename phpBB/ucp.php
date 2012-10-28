@@ -95,6 +95,8 @@ switch ($mode)
 		meta_refresh(3, append_sid("{$phpbb_root_path}index.$phpEx"));
 
 		$message = $message . '<br /><br />' . sprintf($user->lang['RETURN_INDEX'], '<a href="' . append_sid("{$phpbb_root_path}index.$phpEx") . '">', '</a> ');
+		require_once($phpbb_root_path . 'wp-united/wpu-actions.' . $phpEx);
+		$GLOBALS['wpu_actions']->do_logout();
 		trigger_error($message);
 
 	break;

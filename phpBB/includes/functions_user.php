@@ -2387,6 +2387,10 @@ function avatar_process_user(&$error, $custom_userdata = false, $can_upload = nu
 		if (sizeof($sql_ary))
 		{
 			$ext_new = $ext_old = '';
+
+			require_once($GLOBALS['phpbb_root_path'] . 'wp-united/wpu-actions.' . $GLOBALS['phpEx']);
+			$GLOBALS['wpu_actions']->profile_update('avatar', ($custom_userdata === false) ? $user->data['user_id'] : $custom_userdata['user_id'], ($custom_userdata === false) ? 			$user->data['user_wpuint_id'] : $custom_userdata['user_wpuint_id'], $sql_ary);
+
 			if (isset($sql_ary['user_avatar']))
 			{
 				$userdata = ($custom_userdata === false) ? $user->data : $custom_userdata;

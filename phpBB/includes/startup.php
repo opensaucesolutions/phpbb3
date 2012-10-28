@@ -19,7 +19,7 @@ if (!defined('E_DEPRECATED'))
 {
 	define('E_DEPRECATED', 8192);
 }
-$level = E_ALL & ~E_NOTICE & ~E_DEPRECATED;
+$level = E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING;
 if (version_compare(PHP_VERSION, '5.4.0-dev', '>='))
 {
 	// PHP 5.4 adds E_STRICT to E_ALL.

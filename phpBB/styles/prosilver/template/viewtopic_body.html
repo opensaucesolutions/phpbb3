@@ -186,6 +186,9 @@
 			<!-- Use a construct like this to include admin defined profile fields. Replace FIELD1 with the name of your field. -->
 			<dd><strong>{postrow.PROFILE_FIELD1_NAME}:</strong> {postrow.PROFILE_FIELD1_VALUE}</dd>
 		<!-- ENDIF -->
+        <!-- IF postrow.U_BLOG_LINK -->
+            <dd><strong>{L_BLOG}:</strong> <a href="{postrow.U_BLOG_LINK}" title="{L_VISIT_BLOG}" >{L_VISIT_BLOG}</a></dd>
+        <!-- ENDIF -->
 
 		<!-- BEGIN custom_fields -->
 			<dd><strong>{postrow.custom_fields.PROFILE_FIELD_NAME}:</strong> {postrow.custom_fields.PROFILE_FIELD_VALUE}</dd>

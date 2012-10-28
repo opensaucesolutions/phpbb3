@@ -909,6 +909,9 @@ class acp_users
 						// Let the users permissions being updated
 						$auth->acl_clear_prefetch($user_id);
 
+						require_once($phpbb_root_path . 'wp-united/wpu-actions.' . $phpEx);
+						$GLOBALS['wpu_actions']->profile_update('reg_details', $user_id, $user_row['user_wpuint_id'], $sql_ary);
+
 						add_log('admin', 'LOG_USER_USER_UPDATE', $data['username']);
 
 						trigger_error($user->lang['USER_OVERVIEW_UPDATED'] . adm_back_link($this->u_action . '&amp;u=' . $user_id));
@@ -1399,6 +1402,9 @@ class acp_users
 							SET ' . $db->sql_build_array('UPDATE', $sql_ary) . "
 							WHERE user_id = $user_id";
 						$db->sql_query($sql);
+
+						require_once($phpbb_root_path . 'wp-united/wpu-actions.' . $phpEx);
+						$GLOBALS['wpu_actions']->profile_update('profile_info', $user_id, $user_row['user_wpuint_id'], $sql_ary);
 
 						// Update Custom Fields
 						$cp->update_profile_field_data($user_id, $cp_data);
